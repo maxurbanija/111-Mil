@@ -9,6 +9,6 @@ funcion getUser(id:entero):string
   codeLine2
   codeLine3
   codeline4
-  
   codeline5
+  codeline6
 fin funcion
