@@ -8,4 +8,5 @@ funcion getUser(id:entero):string
   codeLine1
   codeLine2
   codeLine3
+  codeline4
 fin funcion
