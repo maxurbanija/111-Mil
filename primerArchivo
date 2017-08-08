@@ -11,4 +11,6 @@ funcion getUser(id:entero):string
   codeline4
   codeline5
   codeline6
+	codeline7
+codeline8
 fin funcion
