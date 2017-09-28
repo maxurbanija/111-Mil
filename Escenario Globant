@@ -1,0 +1,132 @@
+import java.util.*;
+public class Aplicacion {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		boolean errorEmpleado=false;
+		char c;
+		int a;
+		c='a';
+		
+		List<String> inside = new ArrayList<String>();
+		List<List<String>> nodo1 = new ArrayList<List<String>>();
+		
+		inside.add("Juan");
+		inside.add("123456");
+		inside.add("Direccion");
+		inside.add("999-10-03");
+		inside.add("Hola:");
+		inside.add("Hola:");
+		inside.add("Hola:");
+		inside.add("Hola:");
+			
+		nodo1.add(inside);
+		
+		nodo1.get(0);
+	
+		
+		System.out.println(validaDni(nodo1.get(0).get(1)));
+	}
+		
+	
+		public static int aNumero(char c){
+			int n;
+			n=-1;
+			switch (c) {
+			case '0': n=0;break;
+			case '1': n=1;break;
+			case '2': n=2;break;
+			case '3': n=3;break;
+			case '4': n=4;break;
+			case '5': n=5;break;
+			case '6': n=6;break;
+			case '7': n=7;break;
+			case '8': n=8;break;
+			case '9': n=9;break;
+			}
+			return n;
+		}
+		
+		public static boolean validarLetra(char c){
+			int i=0;
+			char[] letras={'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', '´'};
+			boolean control;
+			control=false;
+			
+			while (i<letras.length){
+				if(letras[i]==c){
+					control=true;
+					i=letras.length;
+				}
+				i++;
+			}
+			return control;
+		}
+		
+		public static int validaDni(String c){
+			int control,i;
+			control=0;
+			i=0;
+			if(c.length()>8 || c.length()<7){
+				return 1;
+			}else{
+				while(i<c.length()){
+					if (aNumero(c.charAt(i))==-1){
+						return 1;
+					}
+					i++;
+				}
+			}
+			
+			return control;
+		}
+		
+		public static boolean controlFormatoFecha(String dato){
+			if(dato.length()!=9){
+				return false;
+			}else{
+				if (aNumero(dato.charAt(0))==-1){
+					return false;
+				}else{
+					if (aNumero(dato.charAt(1))==-1){
+						return false;
+					}else{
+						if (aNumero(dato.charAt(2))==-1){
+							return false;
+						}else{
+							if (dato.charAt(3)!='-'){
+								return false;
+							}else{
+								if (aNumero(dato.charAt(4))==-1){
+									return false;
+								}else{
+									if (aNumero(dato.charAt(5))==-1){
+										return false;
+									}else{
+										if (dato.charAt(6)!='-'){
+											return false;
+										}else{
+											if (aNumero(dato.charAt(7))==-1){
+												return false;
+											}else{
+												if (aNumero(dato.charAt(8))==-1){
+													return false;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				
+			}
+			return true;
+			
+		}
+		}
+		
+
+
+}
+	
