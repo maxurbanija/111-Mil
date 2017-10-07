@@ -1,0 +1,336 @@
+INICIO
+LISTA empleados, nodo
+ARREGLO letras=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', '`' ]
+ARREGLO numeros=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+ARREGLO campos=["Nombre Empleado: ","DNI: ", "Direccion: ","Fecha Nacimiento: ","Fecha Ingreso: ","Salario: ","Posicion Actual: ","Seniority: " ]
+ENTERO acumularErrores, i, j, error
+
+
+
+FUNCION aNumero(c:CARACTER):ENTERO
+	ENTERO n
+	n=-1
+	SEGUN SEA c
+		'0': n=0
+		'1': n=1
+		'2': n=2
+		'3': n=3
+		'4': n=4
+		'5': n=5
+		'6': n=6
+		'7': n=7
+		'8': n=8
+		'9': n=9
+	FIN SEGUN
+	aNumero=n
+FIN FUNCION
+
+
+FUNCION validar_letra (c:CARACTER):BOOLEANO
+	ENTERO i
+	BOOLEANO control
+	control=falso
+	MIENTRAS (i<getLong(letras)) HACER
+		SI (letras[i]==c) ENTONCES
+			control = verdadero
+			i=getLong(letras)
+		FIN SI
+		i++
+	FIN MIENTRAS
+	validar_letra=control
+FIN FUNCION
+
+
+FUNCION direccion (c:STRING):ENTERO
+	BOOLEANO validarL
+	ENTERO i, validarN,control
+	i = 0
+	control=0
+	MIENTRAS (i<getLong(c)) HACER
+		validarL=validar_letra(c.getCharAt(i))
+		validarN=aNumero(c.getCharAt)
+		SI (validarL==falso) ENTONCES
+			i=getLong(c)
+			control=1
+			
+		SINO
+			SI (validarN == -1) ENTONCES
+				control=1
+				i=getLong(c)
+				
+			FIN SI
+		FIN SI
+		i++
+	FIN MIENTRAS
+	direccion=control
+FIN FUNCION
+
+
+FUNCION dni(dato:STRING):ENTERO
+	ENTERO control=0
+	ENTERO i=0
+	SI (getLong(dato) >8) || (getLong(dato)<7) ENTONCES
+		control=1
+		
+	SINO 
+		MIENTRAS (i<getLong(dato))
+			SI (aNumero(dato.getCharAt(i)) == -1) ENTONCES
+				i=getLong(dato)
+				control=1
+				
+			FIN SI
+			i++
+		FIN MIENTRAS
+	FIN SI
+	dni=control
+FIN FUNCION
+
+AAA-MM-DD
+
+FUNCION controlFormatoFecha(dato:STRING):BOOLEANO
+	BOOLEANO control
+	control=true
+	SI (getLong(dato)!=9) ENTONCES
+		control=false
+	SINO
+		SI aNumero((dato.getCharAt(0))==-1) ENTONCES
+			control=false
+		SINO
+			SI aNumero((dato.getCharAt(1))=-1) ENTONCES
+				control=false
+			SINO
+				SI aNumero((dato.getCharAt(2))==-1) ENTONCES
+					control=false
+				SINO
+					SI (dato.getCharAt(3)!='-') ENTONCES
+						control=false
+					SINO
+						SI aNumero((dato.getCharAt(4))==-1) ENTONCES
+							control=false
+						SINO
+							SI aNumero((dato.getCharAt(5))==-1) ENTONCES
+								control=false
+							SINO
+								SI (dato.getCharAt(6)=='-') ENTONCES
+									control=false
+								SINO	
+									SI aNumero((dato.getCharAt(7))==-1) ENTONCES
+										control=false
+									SINO
+										SI aNumero((dato.getCharAt(8))==-1) ENTONCES
+											control=false
+										FIN SI
+									FIN SI
+								FIN SI
+							FIN SI
+						FIN SI
+					FIN SI
+				FIN SI
+			FIN SI
+		FIN SI
+	FIN SI
+		controlFormatoFecha=control
+FIN FUNCION
+
+
+FUNCION controlRangoFecha(dato:string):BOOLEANO
+	ENTERO MM,DD
+	BOOLEANO control
+	control=true
+	MM=aNumero(dato.getCharAt(4))*10+aNumero(dato.getCharAt(5))
+	DD=aNumero(dato.getCharAt(7))*10+aNumero(dato.getCharAt(8))
+
+	SI (MM > 12) && (DD > 31) ENTONCES 
+		control=false
+	FIN SI
+
+	controlRangoFecha = control;
+
+FIN FUNCION
+
+FUNCION nombreApellido(dato:STRING):ENTERO
+	ENTERO i,control
+	i=0
+	control=0
+	MIENTRAS (i<getLong(dato)) HACER
+		SI !validar_letra(dato.getCharAt(i)) ENTONCES
+			control=1
+			
+			i=getLong(dato)
+		FIN SI
+		i++
+	FIN MIENTRAS
+	nombreApellido=control
+FIN FUNCION
+
+
+FUNCION valorFechaNac(dato:STRING):ENTERO
+	ENTERO control,AA,MM,DD, AAS, MMS, DDS, edad
+	STRING fechaActual
+	fechaActual = System.date //"obtenemos la fecha en formato AAAA-MM-DD"
+	control=0
+
+	SI (controlFormatoFecha(dato) && controlRangoFecha(dato)) ENTONCES
+		
+		AA=aNumero(dato.getCharAt(0))*100+aNumero(dato.getCharAt(1))*10+aNumero(dato.getCharAt(2))
+		MM=aNumero(dato.getCharAt(4))*10+aNumero(dato.getCharAt(5))
+		DD=aNumero(dato.getCharAt(7))*10+aNumero(dato.getCharAt(8))
+
+		AAS=aNumero(fechaActual.getCharAt(1))*100+aNumero(fechaActual.getCharAt(2))*10+aNumero(fechaActual.getCharAt(3))+aNumero(fechaActual.getcharAt(0))*1000
+		MMS=aNumero(fechaActual.getCharAt(5))*10+aNumero(fechaActual.getCharAt(6))
+		DDS=aNumero(fechaActual.getCharAt(8))*10+aNumero(fechaActual.getCharAt(9))
+
+		SI (dato.getcharAt(0)=='9') ENTONCES
+			AA+=1000
+		SINO
+			SI (dato.getcharAt(0)=='0') ENTONCES
+				AA+=2000
+			SINO
+				control=1
+			FIN SI
+		FIN SI
+
+		SI (control==0) ENTONCES
+			edad=AAS-AA
+			 
+			SI (MMS < MM) ENTONCES
+			  edad-=1
+			FIN SI
+			
+			SI (MMS == MM) && (DDS < DD) ENTONCES
+				edad-=1
+			FIN SI
+			
+			SI edad<18 ENTONCES
+				control=1
+			FIN SI
+		FIN SI
+		
+	SINO
+		control=1	
+	FIN SI
+
+	valorFechaNac=control
+FIN FUNCION
+
+FUNCION valorFechaIngreso (dato:STRING):ENTERO //devuelve 1 si es incorrecta la fecha sino 0
+	ENTERO control, AA, MM, DD, AAS, MMS, DDS, edad
+	STRING fechaActual
+	fechaActual = System.date "obtenemos la fecha en formato AAAA-MM-DD"
+	control=0
+
+	SI (controlFormatoFecha(dato) && controlRangoFecha(dato)) ENTONCES
+		
+		AA=aNumero(dato.getCharAt(0))*100+aNumero(dato.getCharAt(1))*10+aNumero(dato.getCharAt(2))
+		MM=aNumero(dato.getCharAt(4))*10+aNumero(dato.getCharAt(5))
+		DD=aNumero(dato.getCharAt(7))*10+aNumero(dato.getCharAt(8))
+
+		AAS=aNumero(fechaActual.getCharAt(1))*100+aNumero(fechaActual.getCharAt(2))*10+aNumero(fechaActual.getCharAt(3))+aNumero(fechaActual.getcharAt(0))*1000
+		MMS=aNumero(fechaActual.getCharAt(5))*10+aNumero(fechaActual.getCharAt(6))
+		DDS=aNumero(fechaActual.getCharAt(8))*10+aNumero(fechaActual.getCharAt(9))
+
+		SI (dato.getcharAt(0)=='9') ENTONCES
+			AA+=1000
+		SINO
+			SI (dato.getcharAt(0)=='0') ENTONCES
+				AA+=2000
+			SINO
+				control=1
+			FIN SI
+		FIN SI
+
+		SI (control==0) ENTONCES
+			SI (AAS<AA) ENTONCES
+				control=1
+			SINO
+				SI (AAS==AA) && (MMS<MM) ENTONCES
+					control=1
+				SINO
+					SI (AA==AAS) && (MMS==MM) && (DDS<DD) ENTONCES
+						control=1
+					FIN SI
+				FIN SI
+			FIN SI
+		FIN SI		
+	SINO
+		control=1	
+	FIN SI
+
+	valorFechaNac=control
+FIN FUNCION
+
+
+
+FUNCION salario(dato:STRING):ENTERO
+	ENTERO control
+	i=0
+	control=0
+
+	MIENTRAS (i<(getLong(dat)-3)) HACER
+		SI (aNumero(dato.getCharAt(i))==-1) ENTONCES
+			control=1
+			i=getLong(dato)-3
+			
+		FIN SI
+		i++
+	FIN MIENTRAS
+
+	SI (getLong(dato)<4) || (dato.getCharAt(i-1)!=',') || (aNumero(dato.getCharAt(i))==-1) || (aNumero(dato.getCharAt(i+1))==-1) ENTONCES
+		control=1
+		
+	FIN SI
+FIN FUNCION
+
+
+FUNCION seniority(dato:STRING):ENTERO
+	ENTERO control
+	control=1
+	SEGUN SEA dato
+		"trainee": 	 	control=0
+		"junior":		control=0
+		"semisenior": 	control=0
+		"senior":		control=0
+		"architect":	control=0
+	FIN SEGUN
+	 
+	seniority = control
+FIN FUNCION
+
+
+//COMIENZO DE LA FUNCION PRINCIPAL
+
+
+BOOLEANO errorEmpleado;
+
+PARA (i=0; i<tamEMP.size-1;i++)
+	errorEmpleado = falsejs
+	nodo=obt(empleados,i);
+		PARA (j=0; j < nodo.size-1;i++)
+			SEGUN SEA j:
+			0: error = nombreApellido(obt(nodo,j)
+			1: error = dni(nodo,j)
+			2: error = direccion(nodo,j)
+			3: error = fechaNacimiento(nodo,j)
+			4: error = fechaIngreso(nodo,j)
+			5: error = salario(nodo,j)
+			6: error = nombreApellido(nodo,j)
+			7: error = seniority(obt(nodo,j)
+			fin segun
+
+			SI error==1 ENTONCES
+				IMPRIMIR("Error "+ campo[j]+OBT(nodo,j))
+				band=TRUE	
+			FIN SI
+
+		FIN PARA //para de datosEmpleado
+		
+		SI errorEmpleado ENTONCES
+			IMPRIMIR("--------------")
+			IMPRIMIR("Empleado: "+OBT(nodo,0))
+			IMPRIMIR("--------------")
+			
+		FIN SI
+FIN PARA //para de empleados
+
+FIN
+
