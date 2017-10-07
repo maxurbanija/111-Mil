@@ -1,3 +1,5 @@
+package empleadosGlobant;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,11 +60,11 @@ private static int aNumero(char c){
 			
 private static boolean validarLetra(char c){
 				int i=0;
-				char[] letras={'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', '´'};
+				char[] letras={'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', 'Â´'};
 				boolean control;
 				control=false;
 				
-				while (i<letras.length){
+				while (i<letras.length){//Ver: no es mas facil preguntar si el caracter c esta dentro del conjunto? en vez de recorrer todo
 					if(letras[i]==(Character.toLowerCase(c))){
 						control=true;
 						i=letras.length;
@@ -92,27 +94,21 @@ private static int validaDni(String c){
 
 private static int validaDireccion(String dir){
     boolean validarL;
-    int i,validarN;
-     i=0;
+    int i = 0,control = 0,validarN;
      
-//     while(i<dir.length()){
-//         validarL=validarLetra(dir.charAt(i));
-//         validarN=aNumero(dir.charAt(i));
-//         if (validarL==false){
-//             return 1; //por el return ya sale de la función
-//          
-//         } else{
-//                  if(validarN== -1){
-//                     return 1;
-//                    
-//                   } 
-//                 }
-//         i++;
-//                 
-//         }
-         return 0;
+     
+     while(i<dir.length()){
+        validarL=validarLetra(dir.charAt(i));
+        validarN=aNumero(dir.charAt(i));
+        if ((validarL==false) || (validarN== -1)){
+            i = dir.length();          
+            control = 1;
+        }                                 
+        i++;                 
+        }
+        return control;
         
-     }  
+    }  
 
 private static boolean controlRangoFecha(String dato){
         int mm,dd;
@@ -137,7 +133,7 @@ public static int validaFechaNac(String dato){
 
          //asignamos el valor a las variables de la fecha del sistema
         Date f=new Date();
-        aas=f.getYear()+1900;
+        aas=f.getYear()+1900; // ?????????????????????????????????????????????????????????????????????????
         mms=f.getMonth();
         dds=f.getDay();
          //asignamos el valor a las variables de la fecha de nacimiento
