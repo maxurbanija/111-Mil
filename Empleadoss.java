@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.lang.*;
-public class Empleados  {
+public class Empleadoss  {
 	
 
 
@@ -15,7 +15,7 @@ private List<List<String>> nodo1 = new ArrayList<List<String>>();
 private static int cantEmpleados;
 
 
-public Empleados(){
+public Empleadoss(){
 	inside.add("Juan Gomez");
 	inside.add("3500A110");
 	inside.add("Direccion 123");
@@ -133,7 +133,7 @@ public static int validaFechaNac(String dato){
 
          //asignamos el valor a las variables de la fecha del sistema
         Date f=new Date();
-        aas=f.getYear()+1900; // ?????????????????????????????????????????????????????????????????????????
+        aas=f.getYear()+1900; 
         mms=f.getMonth();
         dds=f.getDay();
          //asignamos el valor a las variables de la fecha de nacimiento
@@ -242,20 +242,21 @@ private static int validaSeniority(String dato){
 }
 
 private static int validaSalario(String dato){
-	for(int i=0;i<(dato.length())-4;i++){
-		if (aNumero(dato.charAt(i)) == -1){
+	int i=0;
+	while (i<dato.length()-3){
+		if(aNumero(dato.charAt(i))==-1){
 			return 1;
 		}
+		i++;
 	}
 	if ((dato.length()<4) || 
-		(dato.charAt(dato.length()-3)!='.') || 
-		((aNumero(dato.charAt(dato.length()-2))==-1) || 
-		((aNumero(dato.charAt(dato.length()-1))==-1)))){
+		(dato.charAt(i-1)!='.') || 
+		(aNumero(dato.charAt(i))==-1) || 
+		(aNumero(dato.charAt(i+1))==-1) ){
 		return 1;
 	}
 	return 0;
 }
-
 
 private static int validaFechaNacimiento(String datos){
 	return 0;
