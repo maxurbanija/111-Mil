@@ -1,4 +1,10 @@
-package empleadosGlobant;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pkg111.mil;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,13 +23,13 @@ private static int cantEmpleados;
 
 public Empleados(){
 	inside.add("Juan Gomez");
-	inside.add("3500A110");
-	inside.add("Direccion 123");
-	inside.add("99a-10-03");
-	inside.add("Hola:");
-	inside.add("-22000");
-	inside.add("Hola 123 :");
-	inside.add("Presidente De eeuu");
+	inside.add("34500311");
+	inside.add("Direccion pibe123");
+	inside.add("983-10-03");
+	inside.add("018-12-31");
+	inside.add("22000,00");
+	inside.add("Hola 123 ");
+	inside.add("senior");
 				
 	nodo1.add(inside);
 	
@@ -94,19 +100,19 @@ private static int validaDni(String c){
 
 private static int validaDireccion(String dir){
     boolean validarL;
-    int i = 0,control = 0,validarN;
+    int i = 0,validarN;
      
      
      while(i<dir.length()){
         validarL=validarLetra(dir.charAt(i));
         validarN=aNumero(dir.charAt(i));
-        if ((validarL==false) || (validarN== -1)){
+        if ((validarL==false) && (validarN== -1)){
             i = dir.length();          
-            control = 1;
+            return 1;
         }                                 
         i++;                 
         }
-        return control;
+        return 0;
         
     }  
 
@@ -133,12 +139,12 @@ public static int validaFechaNac(String dato){
 
          //asignamos el valor a las variables de la fecha del sistema
         Date f=new Date();
-        aas=f.getYear()+1900; // ?????????????????????????????????????????????????????????????????????????
+        aas=f.getYear()+1900; 
         mms=f.getMonth();
         dds=f.getDay();
          //asignamos el valor a las variables de la fecha de nacimiento
         
-         aa=(aNumero(dato.charAt(0)))*100+aNumero(dato.charAt(0))*10+aNumero(dato.charAt(2));
+         aa=(aNumero(dato.charAt(0)))*100+aNumero(dato.charAt(1))*10+aNumero(dato.charAt(2));
          mm=aNumero(dato.charAt(4))*10+aNumero(dato.charAt(5));
          dd=aNumero(dato.charAt(7))*10+aNumero(dato.charAt(8));
         
@@ -152,15 +158,15 @@ public static int validaFechaNac(String dato){
              }
          }
          
-         if(control==0){
-             edad=aas-aa;
-         }
+         
+         edad=aas-aa;
+         
          
          if (mms<mm){
              edad-=1;
          }
          
-         if((mm==mms)&&(dd<dds)){
+         if((mm==mms)&&(dds<dd)){
              edad-=1;
          }
          
@@ -172,8 +178,60 @@ public static int validaFechaNac(String dato){
      } 
         return 0;
     }
+public static int validaFechaIngreso (String dato){//devuelve 1 si es incorrecta la fecha sino 0
+	int control, AA, MM, DD, AAS, MMS, DDS, edad;
+	String fechaActual;
+	
+	control=0;
 
-private static boolean controlFormatoFecha(String dato){
+	if (controlFormatoFecha(dato) && controlRangoFecha(dato)){
+            	Date f = new Date();
+		AA=aNumero(dato.charAt(0))*100+aNumero(dato.charAt(1))*10+aNumero(dato.charAt(2));
+		MM=aNumero(dato.charAt(4))*10+aNumero(dato.charAt(5));
+		DD=aNumero(dato.charAt(7))*10+aNumero(dato.charAt(8));
+
+		AAS= f.getYear()+1900;
+		MMS= f.getMonth();
+		DDS= f.getDay();
+
+		if (dato.charAt(0)=='9'){
+			AA+=1000;
+                }else{if (dato.charAt(0)=='0'){ 
+			
+				AA+=2000;
+                      }else{
+			
+				control=1;
+                           }
+                      }
+		
+                    
+
+		if (control==0){
+			if (AAS<AA){
+				control=1;
+                        }else{	if((AAS==AA) && (MMS<MM)){		
+				
+					control=1;
+                                }else{
+					if ((AA==AAS) && (MMS==MM) && (DDS<DD)){
+						control=1;
+                                        }
+                                     }
+                        }
+                }else{
+                    control=1;
+                }
+		
+               return control;
+        }
+	
+        return 0;
+    }
+
+
+
+public static boolean controlFormatoFecha(String dato){
 				if(dato.length()!=9){
 					return false;
 				}else{
@@ -242,29 +300,25 @@ private static int validaSeniority(String dato){
 }
 
 private static int validaSalario(String dato){
-	for(int i=0;i<(dato.length())-4;i++){
-		if (aNumero(dato.charAt(i)) == -1){
+	int i=0;
+	while (i<dato.length()-3){
+		if(aNumero(dato.charAt(i))==-1){
 			return 1;
 		}
+		i++;
 	}
 	if ((dato.length()<4) || 
-		(dato.charAt(dato.length()-3)!='.') || 
-		((aNumero(dato.charAt(dato.length()-2))==-1) || 
-		((aNumero(dato.charAt(dato.length()-1))==-1)))){
+		(dato.charAt(i-1)!='.') || 
+		(aNumero(dato.charAt(i))==-1) || 
+		(aNumero(dato.charAt(i+1))==-1) ){
 		return 1;
 	}
 	return 0;
 }
 
 
-private static int validaFechaNacimiento(String datos){
-	return 0;
-}
 
-private static int validaFechaIngreso(String datos){
 
-	return 0;
-}
 
 public static int getCantEmpleados() {
 	return cantEmpleados;
@@ -286,7 +340,7 @@ public static int controlarListaEmpleados(List<List<String>> empleados){
 			case 0: error=validaNomyAp(datos.get(j));break;
 			case 1: error=validaDni(datos.get(j));break;
 			case 2: error=validaDireccion(datos.get(j));break;
-			case 3:	error=validaFechaNacimiento(datos.get(j));break;
+			case 3:	error=validaFechaNac(datos.get(j));break;
 			case 4:	error=validaFechaIngreso(datos.get(j));break;
 			case 5:	error=validaSalario(datos.get(j));break;
 			case 6:	error=validaNomyAp(datos.get(j));break;
