@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.lang.*;
-public class Empleados  {
+public class Empleadoss  {
 	
 
 
@@ -16,7 +16,7 @@ private List<List<String>> nodo1 = new ArrayList<List<String>>();
 private static int cantEmpleados;
 
 
-public Empleados(){
+public Empleadoss(){
 	inside.add("Juan Gomez");
 	inside.add("34500311");
 	inside.add("Direccion pibe123");
