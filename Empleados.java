@@ -65,19 +65,11 @@ private static int aNumero(char c){
 			}
 			
 private static boolean validarLetra(char c){
-				int i=0;
-				char[] letras={'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', '´'};
-				boolean control;
-				control=false;
-				
-				while (i<letras.length){//Ver: no es mas facil preguntar si el caracter c esta dentro del conjunto? en vez de recorrer todo
-					if(letras[i]==(Character.toLowerCase(c))){
-						control=true;
-						i=letras.length;
-					}
-					i++;
-				}
-				return control;
+				if ((Character.isLetter(c))|| (Character.isWhitespace(c))){
+                                    return true;
+                                }else{
+                                    return false;
+                                }	
 			}
 			
 private static int validaDni(String c){
