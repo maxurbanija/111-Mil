@@ -300,17 +300,15 @@ private static int validaSeniority(String dato){
 }
 
 private static int validaSalario(String dato){
-	int i=0;
-	while (i<dato.length()-3){
-		if(aNumero(dato.charAt(i))==-1){
+	for(int i=0;i<(dato.length())-4;i++){
+		if (aNumero(dato.charAt(i)) == -1){
 			return 1;
 		}
-		i++;
 	}
 	if ((dato.length()<4) || 
-		(dato.charAt(i-1)!='.') || 
-		(aNumero(dato.charAt(i))==-1) || 
-		(aNumero(dato.charAt(i+1))==-1) ){
+		(dato.charAt(dato.length()-3)!='.') || 
+		((aNumero(dato.charAt(dato.length()-2))==-1) || 
+		((aNumero(dato.charAt(dato.length()-1))==-1)))){
 		return 1;
 	}
 	return 0;
